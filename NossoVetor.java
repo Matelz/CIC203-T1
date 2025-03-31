@@ -13,17 +13,6 @@ public class NossoVetor {
         this(10);
     }
 
-    // public void insere (int i) {
-    // if (!estaCheio())
-    // vetor[ocupacao++] = i;
-    // }
-    // public boolean insere (int i) {
-    // if (!estaCheio()) {
-    // vetor[ocupacao++] = i;
-    // return true;
-    // }
-    // return false;
-    // }
     public void insere(int i) {
         if (estaCheio())
             redimensiona(vetor.length * 2);
@@ -47,15 +36,6 @@ public class NossoVetor {
         return ocupacao == 0;
     }
 
-    // public int remove () {
-    // if (!estaVazio()) {
-    // int aux = vetor[--ocupacao];
-    // if (vetor.length >= 6 && ocupacao <= vetor.length / 4)
-    // redimensiona(vetor.length / 2);
-    // return aux;
-    // }
-    // return -1;
-    // }
     public int remove() {
         if (estaVazio()) {
             throw new VetorVazioException("vetor vazio, nao a o que remover");
@@ -67,18 +47,6 @@ public class NossoVetor {
         return aux;
     }
 
-    // private void aumentaVetor () {
-    // int[] temp = new int[vetor.length * 2];
-    // for (int i=0; i<ocupacao; i++)
-    // temp[i] = vetor[i];
-    // vetor = temp;
-    // }
-    // private void diminuiVetor () {
-    // int[] temp = new int[vetor.length / 2];
-    // for (int i=0; i<ocupacao; i++)
-    // temp[i] = vetor[i];
-    // vetor = temp;
-    // }
     private void redimensiona(int novoTamanho) {
         int[] temp = new int[novoTamanho];
         for (int i = 0; i < ocupacao; i++)
