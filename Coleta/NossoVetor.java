@@ -3,6 +3,8 @@ import java.util.Random;
 public class NossoVetor {
     private int ocupacao;
     private int[] vetor;
+    private long counter;
+    private boolean isOrdered;
 
     public NossoVetor(int tamanho) {
         vetor = new int[tamanho];
@@ -61,7 +63,6 @@ public class NossoVetor {
     public void preencheVetor() {
         Random random = new Random();
         for (int i = 0; i < vetor.length; i++) {
-            // insere(random.nextInt(vetor.length*10));
             vetor[i] = random.nextInt(vetor.length * 10);
         }
         ocupacao = vetor.length;
@@ -95,8 +96,10 @@ public class NossoVetor {
                     vetor[i] = vetor[i + 1];
                     vetor[i + 1] = aux;
                 }
+                counter++;
             }
         }
+        setOrdered(true);
     }
 
     public void selectionSort() {
@@ -109,6 +112,7 @@ public class NossoVetor {
             vetor[i] = vetor[min];
             vetor[min] = x;
         }
+
     }
 
     public void insertionSort() {
@@ -119,6 +123,18 @@ public class NossoVetor {
                 vetor[i + 1] = vetor[i];
             vetor[i + 1] = x;
         }
+    }
+
+    public long getCounter() {
+        return counter;
+    }
+
+    public boolean isOrdered() {
+        return isOrdered;
+    }
+
+    public void setOrdered(boolean isOrdered) {
+        this.isOrdered = isOrdered;
     }
 }
 

@@ -8,44 +8,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ProgressMonitor;
 
 public class GUI {
+  public interface buttonAction {
+    void action();
+  }
+
   private String title;
   private String[] algoritimos;
   private JFrame frame;
+  private String option;
+  public int vecSize;
 
-  public GUI(String title, String[] algoritimos) {
+  private buttonAction action;
+
+  public GUI(String title, String[] algoritimos, buttonAction action) {
     this.title = title;
     this.algoritimos = algoritimos;
+    this.action = action;
   }
 
   public JFrame getFrame() {
     return frame;
-  }
-
-  private void buttonAction() {
-    ProgressMonitor progressMonitor = new ProgressMonitor(frame, "Processando...", "", 0, 100);
-    progressMonitor.setProgress(0);
-    progressMonitor.setMillisToPopup(0);
-    progressMonitor.setProgress(0);
-    progressMonitor.setMaximum(100);
-    progressMonitor.setMinimum(0);
-
-    new Thread() {
-      public void run() {
-        // Simula o algoritmo de ordenação
-        for (int i = 0; i <= 100; i++) {
-          try {
-            Thread.sleep(50);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-          progressMonitor.setProgress(i);
-          progressMonitor.setNote("Processando " + i + "%");
-        }
-      }
-    }.start();
   }
 
   public void initGUI() {
@@ -66,16 +50,29 @@ public class GUI {
     JLabel label2 = new JLabel("Digite a quantidade de elementos:");
 
     JButton startBtn = new JButton("Começar");
-    startBtn.addActionListener(e -> {
-        this.buttonAction();
-    });
 
     JLabel title = new JLabel("Teste de Desempenho - CIC203-T1");
     JLabel signature = new JLabel("Por: Mateus Silva Pereira - (24.00511-8)");
 
     c1 = new JComboBox<String>(algoritimos);
+    c1.addActionListener(e -> {
+      option = (String) c1.getSelectedItem();
+    });
+    c1.setSelectedIndex(0);
 
     JTextField input1 = new JTextField("", 10);
+
+    startBtn.addActionListener(e -> {
+      String input = input1.getText();
+      try {
+        this.vecSize = Integer.parseInt(input);
+      } catch (NumberFormatException ex) {
+        System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+        return;
+      }
+
+      this.action.action();
+    });
 
     gBagConstraints.fill = GridBagConstraints.HORIZONTAL;
     gBagConstraints.anchor = GridBagConstraints.CENTER;
