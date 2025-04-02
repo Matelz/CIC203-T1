@@ -19,4 +19,3 @@ Este trabalho tem como meta desenvolver um sistema que consiga realizar diversas
  \ Analise (Arquivos em Python utilizados para analisar os dados coletados).
 ```
 ```
-```
