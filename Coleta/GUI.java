@@ -6,26 +6,47 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GUI {
-  public interface buttonAction {
-    void action();
-  }
-
   private String title;
   private String[] algoritimos;
   private JFrame frame;
   private String option;
+  private int repetitions;
   public int vecSize;
 
-  private buttonAction action;
-
-  public GUI(String title, String[] algoritimos, buttonAction action) {
+  public GUI(String title, String[] algoritimos) {
     this.title = title;
     this.algoritimos = algoritimos;
-    this.action = action;
+  }
+
+  public void buttonAction() {
+    // Execute the selected algorithm based on the option and vecSize
+    for (int i = 0; i < repetitions; i++) {
+      NossoVetor vetor = new NossoVetor(this.vecSize);
+      vetor.preencheVetor();
+      switch (option) {
+        case "Bubble Sort":
+          vetor.bubbleSort();
+          break;
+        case "Selection Sort":
+          vetor.selectionSort();
+          break;
+        case "Insertion Sort":
+          vetor.insertionSort();
+          break;
+        default:
+          System.out.println("Algoritmo não reconhecido.");
+      }
+    }
+
+    JOptionPane.showMessageDialog(frame, "Teste de desempenho concluído!\n" +
+        "Algoritmo: " + option + "\n" +
+        "Tamanho do vetor: " + vecSize + "\n" +
+        "Repetições: " + repetitions);
   }
 
   public JFrame getFrame() {
@@ -48,6 +69,7 @@ public class GUI {
 
     JLabel label1 = new JLabel("Selecione o algorítimo:");
     JLabel label2 = new JLabel("Digite a quantidade de elementos:");
+    JLabel label3 = new JLabel("Digite a quantidade de repetições:");
 
     JButton startBtn = new JButton("Começar");
 
@@ -61,17 +83,26 @@ public class GUI {
     c1.setSelectedIndex(0);
 
     JTextField input1 = new JTextField("", 10);
+    JTextField input2 = new JTextField("1", 10);
 
     startBtn.addActionListener(e -> {
       String input = input1.getText();
+      String repetitions = input2.getText();
+
+      if (input.isEmpty() || repetitions.isEmpty()) {
+        System.out.println("Por favor, preencha todos os campos.");
+        return;
+      }
+
       try {
         this.vecSize = Integer.parseInt(input);
+        this.repetitions = Integer.parseInt(repetitions);
       } catch (NumberFormatException ex) {
         System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
         return;
       }
 
-      this.action.action();
+      this.buttonAction();
     });
 
     gBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -100,12 +131,20 @@ public class GUI {
     gBagConstraints.fill = GridBagConstraints.HORIZONTAL;
     gBagConstraints.gridx = 0;
     gBagConstraints.gridy = 3;
+    gBagConstraints.gridwidth = 1;
+    panel.add(label3, gBagConstraints);
+    gBagConstraints.gridx = 1;
+    panel.add(input2, gBagConstraints);
+
+    gBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+    gBagConstraints.gridx = 0;
+    gBagConstraints.gridy = 4;
     gBagConstraints.gridwidth = 2;
     panel.add(startBtn, gBagConstraints);
 
     gBagConstraints.fill = GridBagConstraints.HORIZONTAL;
     gBagConstraints.gridx = 0;
-    gBagConstraints.gridy = 4;
+    gBagConstraints.gridy = 5;
     gBagConstraints.gridwidth = 2;
     panel.add(signature, gBagConstraints);
 

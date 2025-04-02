@@ -4,7 +4,9 @@ public class NossoVetor {
     private int ocupacao;
     private int[] vetor;
     private long counter;
-    private boolean isOrdered;
+    private long startTime;
+    private long endTime;
+    private long elapsedTime;
 
     public NossoVetor(int tamanho) {
         vetor = new int[tamanho];
@@ -89,6 +91,15 @@ public class NossoVetor {
     }
 
     public void bubbleSort() {
+        if (estaVazio()) {
+            throw new VetorVazioException("vetor vazio, nao a o que ordenar");
+        }
+        startTime = 0;
+        endTime = 0;
+        elapsedTime = 0;
+
+        startTime = System.currentTimeMillis();
+
         for (int vez = 1; vez < vetor.length; vez++) {
             for (int i = 0; i < vetor.length - vez; i++) {
                 if (vetor[i] > vetor[i + 1]) {
@@ -99,42 +110,71 @@ public class NossoVetor {
                 counter++;
             }
         }
-        setOrdered(true);
+
+        endTime = System.currentTimeMillis();
+        elapsedTime = endTime - startTime;
+
+        System.out.println(elapsedTime + "ms, " + counter);
     }
 
     public void selectionSort() {
+        if (estaVazio()) {
+            throw new VetorVazioException("vetor vazio, nao a o que ordenar");
+        }
+        startTime = 0;
+        endTime = 0;
+        elapsedTime = 0;
+
+        startTime = System.currentTimeMillis();
+        
         for (int i = 0; i < vetor.length - 1; ++i) {
             int min = i;
             for (int j = i + 1; j < vetor.length; ++j)
                 if (vetor[j] < vetor[min])
                     min = j;
+                counter++;
             int x = vetor[i];
             vetor[i] = vetor[min];
             vetor[min] = x;
         }
 
+        endTime = System.currentTimeMillis();
+        elapsedTime = endTime - startTime;
+
+        System.out.println(elapsedTime + "ms, " + counter);
     }
 
     public void insertionSort() {
+        if (estaVazio()) {
+            throw new VetorVazioException("vetor vazio, nao a o que ordenar");
+        }
+        startTime = 0;
+        endTime = 0;
+        elapsedTime = 0;
+
+        startTime = System.currentTimeMillis();
+
         for (int j = 1; j < vetor.length; ++j) {
             int x = vetor[j];
             int i;
             for (i = j - 1; i >= 0 && vetor[i] > x; --i)
                 vetor[i + 1] = vetor[i];
+                counter++;
             vetor[i + 1] = x;
         }
+
+        endTime = System.currentTimeMillis();
+        elapsedTime = endTime - startTime;
+
+        System.out.println(elapsedTime + "ms, " + counter);
     }
 
     public long getCounter() {
         return counter;
     }
 
-    public boolean isOrdered() {
-        return isOrdered;
-    }
-
-    public void setOrdered(boolean isOrdered) {
-        this.isOrdered = isOrdered;
+    public long getElapsedTime() {
+        return elapsedTime;
     }
 }
 
