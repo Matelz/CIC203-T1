@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 public class NossoVetor {
@@ -117,7 +119,7 @@ public class NossoVetor {
         System.out.println(elapsedTime + "ms, " + counter);
     }
 
-    public void selectionSort() {
+    public void selectionSort(boolean shouldLog) {
         if (estaVazio()) {
             throw new VetorVazioException("vetor vazio, nao a o que ordenar");
         }
@@ -126,13 +128,13 @@ public class NossoVetor {
         elapsedTime = 0;
 
         startTime = System.currentTimeMillis();
-        
+
         for (int i = 0; i < vetor.length - 1; ++i) {
             int min = i;
             for (int j = i + 1; j < vetor.length; ++j)
                 if (vetor[j] < vetor[min])
                     min = j;
-                counter++;
+            counter++;
             int x = vetor[i];
             vetor[i] = vetor[min];
             vetor[min] = x;
@@ -141,7 +143,9 @@ public class NossoVetor {
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
 
-        System.out.println(elapsedTime + "ms, " + counter);
+        if (shouldLog) {
+            System.out.println(elapsedTime + "ms, " + counter);
+        }
     }
 
     public void insertionSort() {
@@ -159,7 +163,7 @@ public class NossoVetor {
             int i;
             for (i = j - 1; i >= 0 && vetor[i] > x; --i)
                 vetor[i + 1] = vetor[i];
-                counter++;
+            counter++;
             vetor[i + 1] = x;
         }
 
@@ -167,6 +171,60 @@ public class NossoVetor {
         elapsedTime = endTime - startTime;
 
         System.out.println(elapsedTime + "ms, " + counter);
+    }
+
+    public void linearSearch(int target) {
+        target = vetor[target];
+
+        int counter = 0;
+        int foundElement = -1;
+        startTime = System.nanoTime();
+        
+        for (int i = 0; i < this.vetor.length; i++) {
+            counter++;
+            if (this.vetor[i] == target) {
+                foundElement = this.vetor[i];
+                break;
+            }
+        }
+        
+        endTime = System.nanoTime();
+        double elapsedTime = (endTime - startTime) / 1_000_000_000.0;
+        
+        System.out.printf("%.5f, %d, %d, %d%n", elapsedTime, counter, foundElement, this.vetor.length);
+    }
+
+    public void binarySearch(int target) {
+        target = vetor[target];
+
+        int left = 0;
+        int right = this.vetor.length - 1;
+        int counter = 0;
+        int foundElement = -1; // Default if not found
+        startTime = System.nanoTime();
+
+        while (left <= right) {
+            counter++;
+            int mid = left + (right - left) / 2;
+
+            if (this.vetor[mid] == target) {
+                foundElement = this.vetor[mid];
+                break;
+            } else if (this.vetor[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        endTime = System.nanoTime();
+        double elapsedTime = (endTime - startTime) / 1_000_000_000.0;
+
+        // Convert to BigDecimal for better precision
+        // and round to 10 decimal places
+        BigDecimal bd = new BigDecimal(elapsedTime).setScale(10, RoundingMode.HALF_UP);
+
+        System.out.printf("%s, %d, %d, %d%n", bd.toPlainString(), counter, foundElement, this.vetor.length);
     }
 
     public long getCounter() {

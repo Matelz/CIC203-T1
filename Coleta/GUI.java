@@ -1,6 +1,7 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,10 +34,22 @@ public class GUI {
           vetor.bubbleSort();
           break;
         case "Selection Sort":
-          vetor.selectionSort();
+          vetor.selectionSort(true);
           break;
         case "Insertion Sort":
           vetor.insertionSort();
+          break;
+        case "Linear Search":
+          Random rand = new Random();
+          int randomIndex = rand.nextInt(this.vecSize);
+
+          vetor.linearSearch(randomIndex);
+          break;
+        case "Binary Search":
+          vetor.selectionSort(false);
+          Random rand2 = new Random();
+          int randomIndex2 = rand2.nextInt(this.vecSize);
+          vetor.binarySearch(randomIndex2);
           break;
         default:
           System.out.println("Algoritmo não reconhecido.");
