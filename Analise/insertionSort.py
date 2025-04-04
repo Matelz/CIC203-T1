@@ -5,7 +5,7 @@ import pandas as pd
 import util
 
 def main():
-    times = util.read_files("bubbleSort")
+    times = util.read_files("insertionSort")
     
     sizes = list(times.keys())
     
@@ -47,20 +47,20 @@ def main():
     })
 
     # Salvar os DataFrames em arquivos CSV
-    time_stats_df.to_csv("bubbleSort_time_stats.csv", index=False)
-    ops_stats_df.to_csv("bubbleSort_ops_stats.csv", index=False)
+    time_stats_df.to_csv("insertionSort_time_stats.csv", index=False)
+    ops_stats_df.to_csv("insertionSort_ops_stats.csv", index=False)
 
     plt.figure(figsize=(10, 6))
     plt.plot(sizes, mean_times, marker='o', label='Tempo Médio (ms)')
     plt.fill_between(sizes, np.array(mean_times) - np.array(std_times), np.array(mean_times) + np.array(std_times), alpha=0.2)
-    plt.title('Bubble Sort - Tempo Médio de Execução')
+    plt.title('Insertion Sort - Tempo Médio de Execução')
     plt.xlabel('Tamanho do Vetor')
     plt.ylabel('Tempo (ms)')
     plt.xticks(sizes, rotation=45)
     plt.ylim(0, max(mean_times) * 1.1)
     plt.grid()
     plt.legend()
-    plt.savefig("bubbleSort_time_stats.png")
+    plt.savefig("insertionSort_time_stats.png")
     plt.show()
 
 if __name__ == "__main__":

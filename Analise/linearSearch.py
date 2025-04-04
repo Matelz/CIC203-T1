@@ -5,11 +5,11 @@ import pandas as pd
 import util
 
 def main():
-    times = util.read_files("bubbleSort")
+    times = util.read_files("linearSearch")
     
     sizes = list(times.keys())
     
-    # Valores estatísticos para o tempo de execução em milissegundos
+    # Valores estatísticos para o tempo de execução em nanosegundos
     mean_times = [times[size][0].mean() for size in sizes]
     std_times = [times[size][0].std() for size in sizes]
     min_times = [times[size][0].min() for size in sizes]
@@ -28,12 +28,12 @@ def main():
     # Criação do DataFrame com os resultados
     time_stats_df = pd.DataFrame({
         "Tamanho": sizes,
-        "Tempo Médio (ms)": mean_times,
-        "Desvio Padrão (ms)": std_times,
-        "Mínimo (ms)": min_times,
-        "Máximo (ms)": max_times,
-        "Mediana (ms)": median_times,
-        "Moda (ms)": mode_times,
+        "Tempo Médio (ns)": mean_times,
+        "Desvio Padrão (ns)": std_times,
+        "Mínimo (ns)": min_times,
+        "Máximo (ns)": max_times,
+        "Mediana (ns)": median_times,
+        "Moda (ns)": mode_times,
     })
 
     ops_stats_df = pd.DataFrame({
@@ -47,20 +47,20 @@ def main():
     })
 
     # Salvar os DataFrames em arquivos CSV
-    time_stats_df.to_csv("bubbleSort_time_stats.csv", index=False)
-    ops_stats_df.to_csv("bubbleSort_ops_stats.csv", index=False)
+    time_stats_df.to_csv("linearSearch_time_stats.csv", index=False)
+    ops_stats_df.to_csv("linearSearch_ops_stats.csv", index=False)
 
     plt.figure(figsize=(10, 6))
-    plt.plot(sizes, mean_times, marker='o', label='Tempo Médio (ms)')
+    plt.plot(sizes, mean_times, marker='o', label='Tempo Médio (ns)')
     plt.fill_between(sizes, np.array(mean_times) - np.array(std_times), np.array(mean_times) + np.array(std_times), alpha=0.2)
-    plt.title('Bubble Sort - Tempo Médio de Execução')
+    plt.title('Linear Search - Tempo Médio de Execução')
     plt.xlabel('Tamanho do Vetor')
-    plt.ylabel('Tempo (ms)')
+    plt.ylabel('Tempo (ns)')
     plt.xticks(sizes, rotation=45)
     plt.ylim(0, max(mean_times) * 1.1)
     plt.grid()
     plt.legend()
-    plt.savefig("bubbleSort_time_stats.png")
+    plt.savefig("linearSearch_time_stats.png")
     plt.show()
 
 if __name__ == "__main__":

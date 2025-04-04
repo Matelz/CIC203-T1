@@ -134,7 +134,7 @@ public class NossoVetor {
             for (int j = i + 1; j < vetor.length; ++j)
                 if (vetor[j] < vetor[min])
                     min = j;
-            counter++;
+                counter++;
             int x = vetor[i];
             vetor[i] = vetor[min];
             vetor[min] = x;
@@ -163,7 +163,7 @@ public class NossoVetor {
             int i;
             for (i = j - 1; i >= 0 && vetor[i] > x; --i)
                 vetor[i + 1] = vetor[i];
-            counter++;
+                counter++;
             vetor[i + 1] = x;
         }
 
@@ -200,7 +200,7 @@ public class NossoVetor {
         int left = 0;
         int right = this.vetor.length - 1;
         int counter = 0;
-        int foundElement = -1; // Default if not found
+        int foundElement = -1;
         startTime = System.nanoTime();
 
         while (left <= right) {
@@ -220,8 +220,6 @@ public class NossoVetor {
         endTime = System.nanoTime();
         double elapsedTime = (endTime - startTime) / 1_000_000_000.0;
 
-        // Convert to BigDecimal for better precision
-        // and round to 10 decimal places
         BigDecimal bd = new BigDecimal(elapsedTime).setScale(10, RoundingMode.HALF_UP);
 
         System.out.printf("%s, %d, %d, %d%n", bd.toPlainString(), counter, foundElement, this.vetor.length);

@@ -25,7 +25,6 @@ public class GUI {
   }
 
   public void buttonAction() {
-    // Execute the selected algorithm based on the option and vecSize
     for (int i = 0; i < repetitions; i++) {
       NossoVetor vetor = new NossoVetor(this.vecSize);
       vetor.preencheVetor();
